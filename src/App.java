@@ -1,23 +1,21 @@
 import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.io.File;
 import java.time.Duration;
 import java.time.Instant;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 class Main extends JFrame {
-    
+  static int canvasSize = 1000;
   class App extends JPanel implements MouseListener {
     Grid grid;
     boolean stageBuilt = false;
 
     public App() {
-        setPreferredSize(new Dimension(400, 400));
+        setPreferredSize(new Dimension(canvasSize, canvasSize));
         this.addMouseListener(this);
         grid = new Grid();
     }
@@ -53,6 +51,7 @@ class Main extends JFrame {
   private Main() {
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     App canvas = new App();
+    setBackground(Color.BLACK);
     this.setContentPane(canvas);
     this.pack();
     this.setVisible(true);
@@ -65,7 +64,7 @@ class Main extends JFrame {
       Instant endTime = Instant.now();
       long howLong = Duration.between(startTime, endTime).toMillis();
       try {
-        Thread.sleep(500L - howLong);
+        Thread.sleep(50l - howLong);
       } catch (InterruptedException e) {
         System.out.println("thread was interrupted, but who cares?");
       }

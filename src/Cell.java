@@ -3,12 +3,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Random;
 
+
 public class Cell {
     private int x;
     private int y;
     int row;
     int col;
-    private int size = 40;
+    static int size = Main.canvasSize/Grid.cells.length;
     public boolean visited = false;
     boolean[] walls = {true, true, true, true};
 
@@ -21,7 +22,7 @@ public class Cell {
 
     void paint(Graphics g){
         if(this.visited){
-            g.setColor(Color.MAGENTA);
+            g.setColor(Color.WHITE);
             g.fillRect(x,y,size,size);
         }
         
@@ -43,7 +44,7 @@ public class Cell {
     }
 
     Cell checkNeighbours(){
-        ArrayList<Cell> neighbours = new ArrayList<Cell>();
+        List<Cell> neighbours = new ArrayList<Cell>();
         Random random = new Random();
 
         Cell top = null;
@@ -81,6 +82,11 @@ public class Cell {
             return neighbours.get(random.nextInt(neighbours.size()));
         }
         return null;
+    }
+
+    void highlight(Graphics g){
+        g.setColor(Color.GREEN);
+        g.fillRect(x,y,size,size);
     }
 
 }

@@ -1,13 +1,16 @@
 import java.awt.*;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Grid {
-    static Cell[][] cells = new Cell[10][10];
+    static Cell[][] cells = new Cell[50][50];
     Cell current;
+    List<Cell> stack = new ArrayList<Cell>();
 
     public Grid(){
         for(int i = 0; i < cells.length; i++){
             for(int j = 0; j < cells[i].length; j++){
-                cells[i][j] = new Cell(40*i,40*j, i, j);
+                cells[i][j] = new Cell(Cell.size*i,Cell.size*j, i, j);
             }
         }
 
@@ -22,13 +25,18 @@ public class Grid {
             }
         }
         current.visited = true;
+        current.highlight(g);
         Cell next = current.checkNeighbours();
         if(next!=null){
             next.visited = true;
 
+            stack.add(current);
+
             removeWalls(current, next);
 
             current = next;
+        } else if (stack.size()>0){
+            current = stack.remove(stack.size()-1);
         }
     }
 
